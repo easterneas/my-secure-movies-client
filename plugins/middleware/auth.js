@@ -33,18 +33,17 @@ async function authenticate (req, reply) {
  */
 async function authorize (req, reply) {
   try {
+    const { Movie } = this.models
+    const { id } = req.user
     const { MovieId } = req.params
 
-    if (MovieId) {
-      const { Movie } = this.models
-      const { id } = req.user
+    const movie = await Movie.findByPk(MovieId)
 
-      const movie = await Movie.findByPk(MovieId)
-
+    if (movie) {
       if(movie.UserId !== id) throw new Error('Access not permitted. You should only able to edit your own movies!')
-    }
+    } else throw new Error('Item is not found')
   } catch (e) {
-    reply.code(403).send(e)
+    reply.code(400).send(e)
   }
 }
 
