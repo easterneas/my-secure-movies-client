@@ -1,0 +1,35 @@
+{
+  "name": "movies-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "tap \"test/**/*.test.js\"",
+    "start": "fastify start -l info app.js",
+    "dev": "fastify start -w -l info -P app.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "fastify": "^3.0.0",
+    "fastify-auth": "^1.1.0",
+    "fastify-autoload": "^3.3.1",
+    "fastify-cli": "^2.13.0",
+    "fastify-cookie": "^5.3.1",
+    "fastify-jwt": "^3.2.0",
+    "fastify-plugin": "^3.0.0",
+    "fastify-sensible": "^3.1.0",
+    "fastify-swagger": "^4.12.5",
+    "google-auth-library": "^7.10.0",
+    "pg": "^8.7.1",
+    "sequelize": "^6.7.0"
+  },
+  "devDependencies": {
+    "tap": "^15.0.9"
+  }
+}
