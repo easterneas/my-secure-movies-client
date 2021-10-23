@@ -31,12 +31,12 @@ app.addHook('onClose', async (instance, done) => {
   done()
 })
 
-// // Start listening.
-// app.listen(process.env.PORT || 3000, (err) => {
-//   if (err) {
-//     app.log.error(err)
-//     process.exit(1)
-//   }
-// })
+// Start listening.
+app.listen(process.env.PORT || 3000, '0.0.0.0', (err) => {
+  if (err) {
+    app.log.error(err)
+    process.exit(1)
+  }
+})
 
 module.exports = app
