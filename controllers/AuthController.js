@@ -18,7 +18,7 @@ async function login (req, reply) {
     reply
     .code(200)
     .setCookie(process.env.TOKEN_COOKIE, token, setCookie)
-    .send({ name, email })
+    .send({ name, email, token })
   } catch (e) {
     throw e
   }
@@ -46,9 +46,9 @@ async function register (req, reply) {
     const token = await reply.jwtSign({ name, email })
 
     reply
-    .code(200)
+    .code(201)
     .setCookie(process.env.TOKEN_COOKIE, token, setCookie)
-    .send({ name, email })
+    .send({ name, email, token })
   } catch (e) {
     await t.rollback()
 
