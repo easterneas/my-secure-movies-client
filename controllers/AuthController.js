@@ -40,7 +40,19 @@ async function register (req, reply) {
     const { name, email, password } = req.body
     const hashedPassword = this.hash(password)
 
-    await User.create({ name, email, password: hashedPassword }, { transaction: t })
+    if(!name || !email || !password){
+      await t.rollback()
+      return reply.code(400).send({ message: "You have to put all required input data!" })
+    }
+
+    const existingUser = await User.findOne({ where: { email } })
+
+    if(existingUser){
+      await t.rollback()
+      return reply.code(409).send({ message: "Existing email exists!" })
+    }
+
+    const { id } = await User.create({ name, email, password: hashedPassword }, { transaction: t })
     await t.commit()
 
     const token = await reply.jwtSign({ name, email })
