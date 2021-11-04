@@ -1,5 +1,3 @@
-// const { GOOGLE_CONFIGURATION } = require('fastify-oauth2')
-
 module.exports = {
   main: {
     logger: { level: "trace" }
@@ -9,8 +7,6 @@ module.exports = {
   },
   cookie: {
     secret: process.env.COOKIE_SECRET,
-    // ? parsing cookie options
-    // parseOptions: {}
   },
   setCookie: {
     path: '/',
@@ -18,6 +14,26 @@ module.exports = {
     httpOnly: process.env.COOKIE_HTTP_ONLY === 'true',
     signed: process.env.COOKIE_SIGNED === 'true',
     sameSite: process.env.COOKIE_SAME_SITE === 'true',
+  },
+  cors: {
+    origin: (origin, cb) => {
+      if(process.env.ORIGINS){
+        const origins = process.env.ORIGINS.split(',')
+        let flag = false
+
+        origins.forEach(allowedOrigin => {
+          console.log(origin, allowedOrigin, new RegExp(allowedOrigin).test(origin))
+          if(new RegExp(allowedOrigin).test(origin)) flag = true
+        })
+
+        if(!flag) return cb(null, false)
+      }
+      cb(null, true)
+    },
+    // methods: [ 'GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS' ],
+    credentials: true,
+    optionsSuccessStatus: 200,
+    preflight: true,
   },
   csrf: {},
   helmet: {},
@@ -27,32 +43,11 @@ module.exports = {
       cookieName: process.env.TOKEN_COOKIE,
       signed: process.env.COOKIE_SIGNED === 'true',
     },
-    // * comment this if it's broken on local testing
-    // sign: {
-    //   issuer: process.env.API_DOMAIN
-    // },
-    // verify: {
-    //   issuer: process.env.API_DOMAIN
-    // }
   },
   leveldb: {
     name: `ldb.${process.env.LEVELDB_NAME}`,
-    options: {
-      // store: require('memdown')
-    }
   },
   multer: {},
-  // * Re-enable this if this provides little to no changes
-  // oauth: {
-  //   name: "googleOAuth2",
-  //   credentials: {
-  //     client: {
-  //       id: "",
-  //       secret: "",
-  //     },
-  //     auth: GOOGLE_CONFIGURATION
-  //   }
-  // },
   multipart: {
     limits: {
       fieldNameSize: 100, // Max field name size in bytes
