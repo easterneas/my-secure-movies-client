@@ -11,15 +11,11 @@ module.exports = (sequelize, DataTypes) => {
 
   Studio.init(
     {
-      UserId: {
-        type: DataTypes.INTEGER,
-        references: { model: "Users", key: "id" }
-      },
       name: DataTypes.STRING,
       specialization: DataTypes.STRING,
     },
     { sequelize, modelName: 'Studio' }
   )
-  
+
   return Studio
 }
