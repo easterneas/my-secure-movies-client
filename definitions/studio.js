@@ -29,7 +29,7 @@ module.exports = {
       properties: {
         message: {
           type: 'string',
-          description: 'The message when user tries to find a non-existent movie'
+          description: 'The message when user tries to find a non-existent studio'
         }
       }
     },
