@@ -37,11 +37,13 @@ async function authorize (req, reply) {
     const { id } = req.user
     const { MovieId } = req.params
 
-    const movie = await Movie.findByPk(MovieId)
+    if(MovieId){
+      const movie = await Movie.findByPk(MovieId)
 
-    if (movie) {
-      if(movie.UserId !== id) throw new Error('Access not permitted. You should only able to edit your own movies!')
-    } else throw new Error('Item is not found')
+      if (movie) {
+        if(movie.UserId !== id) throw new Error('Access not permitted. You should only able to edit your own movies!')
+      } else throw new Error('Item is not found')
+    }
   } catch (e) {
     reply.code(400).send(e)
   }
