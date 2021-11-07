@@ -6,6 +6,9 @@ async function getMovies (req, reply) {
       { model: Studio, attributes: [ 'name' ] },
       { model: Genre }
     ],
+    where: {
+      UserId: req.user.id
+    }
   })
 
   return reply.status(200).send(movies)
