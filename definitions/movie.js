@@ -34,6 +34,7 @@ module.exports = {
       description: 'Successful response',
       type: 'object',
       properties: {
+        id: { type: 'integer' },
         GenreId: {
           type: 'integer',
           description: 'The ID for Genre relation table',
@@ -71,6 +72,7 @@ module.exports = {
       description: 'Successful response',
       type: 'object',
       properties: {
+        id: { type: 'integer' },
         GenreId: {
           type: 'integer',
           description: 'The ID for Genre relation table',
