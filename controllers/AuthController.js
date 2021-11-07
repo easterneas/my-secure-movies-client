@@ -8,17 +8,20 @@ async function login (req, reply) {
     if(!email || !password)
       return reply.code(400).send({ message: "You have to fill both fields!" })
 
-    const { name, password: userPassword } = await User.findOne({ where: { email } })
+    const foundUser = await User.findOne({ where: { email } })
 
-    if(!name) return reply.code(404).send({ message: "Sorry, but wrong credentials." })
-    if(!this.verifyHash(password, userPassword)) return reply.code(404).send({ message: "Sorry, but wrong credentials." })
+    if(!foundUser)
+      return reply.code(404).send({ message: "Sorry, but wrong credentials." })
 
-    const token = await reply.jwtSign({ name, email })
+    if(!this.verifyHash(password, foundUser.password))
+      return reply.code(404).send({ message: "Sorry, but wrong credentials." })
+
+    const token = await reply.jwtSign({ name: foundUser.name, email })
 
     reply
     .code(200)
     .setCookie(process.env.TOKEN_COOKIE, token, setCookie)
-    .send({ name, email, token })
+    .send({ name: foundUser.name, email, token })
   } catch (e) {
     throw e
   }
