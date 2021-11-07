@@ -3,7 +3,7 @@ require('dotenv').config()
 module.exports = {
   "development": {
     "use_env_variable": "DB_DEV_URL",
-    logging: false
+    logging: console.info
   },
   "test": {
     "use_env_variable": "DB_TEST_URL",
