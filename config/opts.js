@@ -17,6 +17,7 @@ module.exports = {
   },
   cors: {
     origin: (origin, cb) => {
+      console.log(origin, cb)
       if(process.env.ORIGINS){
         const origins = process.env.ORIGINS.split(',')
         let flag = false
