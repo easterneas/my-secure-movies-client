@@ -1,0 +1,16 @@
+# Spacefile Docs: https://go.deta.dev/docs/spacefile/v0
+v: 0
+micros:
+  - name: my-secure-movies-client
+    src: ./
+    engine: nodejs16
+    primary: true
+    public: true
+    presets:
+      env:
+      - name: NODE_ENV
+        description: Production URL for the database
+        default: production
+      - name: DB_PROD_URL
+        description: Production URL for the database
+      - name: JWT_SECRET
